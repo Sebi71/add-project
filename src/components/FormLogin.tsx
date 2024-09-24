@@ -1,6 +1,7 @@
 //npm i zod react-hook-form @hookform/resolvers react-toastify
 //npm install next-auth
 
+import { FormData } from "@/types/types";
 import { loginSchema } from "@/schemas/loginSchema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,10 +12,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-interface FormData {
-  email: string;
-  password: string;
-}
 
 export default function FormLogin() {
   const router = useRouter();

@@ -2,22 +2,14 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import ProtectedRoute from "../../../componenents/protectedRoute";
 
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (status === "loading") return;
-
-    if (!session) {
-      router.push("/");
-    }
-  }, [status, session, router]);
-
   return (
-    <>
+    <ProtectedRoute>
       {session ? (
         <div>
           <div className="w-full flex items-center justify-center flex-col gap-5 mt-10">
@@ -36,13 +28,13 @@ export default function Dashboardpage() {
                 Se déconnecter
               </button>
               <button
-              onClick={()=> router.push("/addproject")}
+              onClick={()=> router.push("/dashboard/addproject")}
                 className="bg-green-400 hover:bg-green-500 rounded-md p-3 flex items-center"
               >
                 Ajouter un projet
               </button>
               <button
-              onClick={()=> router.push("/addskill")}
+              onClick={()=> router.push("/dashboard/addskill")}
                 className="bg-blue-400 hover:bg-blue-500 rounded-md p-3 flex items-center"
               >
                 Ajouter une compétence
@@ -52,6 +44,6 @@ export default function Dashboardpage() {
           {/* gallerie de projet */}
         </div>
       ) : null}
-    </>
+    </ProtectedRoute>
   );
 }
