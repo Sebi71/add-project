@@ -5,6 +5,7 @@ import {
   collection,
   onSnapshot,
   addDoc,
+  updateDoc,
   doc,
   query,
   where,
@@ -61,9 +62,31 @@ export const SkillProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     };
 
+    const updateSkill = async (skill: Partial<SkillFormData>) => {
+        if (!skill.id) {
+            throw new Error("L'ID de la compétence est requis");
+        }
+        try {
+            const skillRef = doc(db, "skills", skill.id);
+            await updateDoc(skillRef, skill);
+            setSkills(
+                skills.map((a) => (a.id === skill.id ? {...a, ...skill} : a))
+            );
+        } catch (error) {
+            console.error(
+              "Une erreur est survenue lors de la modification de l'article",
+              error
+            );
+            throw new Error("Erreur dans la modification de l'article");
+          }
+    }
+
+    
+
     const value = {
         skills,
         addSkill,
+        updateSkill,
     };
 
     return <SkillContext.Provider value={value}>{children}</SkillContext.Provider>;

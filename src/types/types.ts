@@ -13,4 +13,5 @@ export interface SkillFormData {
 export interface DbContextType {
   skills: SkillFormData[];
   addSkill: (skilldata: Omit<SkillFormData, "id">) => Promise<void>;
+  updateSkill: (skill: SkillFormData) => Promise<void>;
 }

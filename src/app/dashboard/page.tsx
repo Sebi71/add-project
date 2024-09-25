@@ -3,6 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "../../../componenents/protectedRoute";
+import SkillsView from "@/components/SkillsView";
 
 export default function Dashboardpage() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Dashboardpage() {
     <ProtectedRoute>
       {session ? (
         <div>
-          <div className="w-full flex items-center justify-center flex-col gap-5 mt-10">
+          <div className="w-full flex items-center justify-center flex-col gap-5 mt-10 border-b-2 pb-5">
             <h1 className="text-4xl text-gray-700 uppercase font-black">
               Bienvenue <b>{session.user?.name}</b>
             </h1>
@@ -41,7 +42,10 @@ export default function Dashboardpage() {
               </button>
             </div>
           </div>
+          <div>
+            <SkillsView />
           {/* gallerie de projet */}
+          </div>
         </div>
       ) : null}
     </ProtectedRoute>

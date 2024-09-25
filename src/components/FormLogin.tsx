@@ -11,8 +11,6 @@ import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
 export default function FormLogin() {
   const router = useRouter();
 
@@ -36,12 +34,14 @@ export default function FormLogin() {
         redirect: false,
       });
 
-      if (!response?.error) {
+      if (response && !response.error) {
+        toast.success("Connexion réussie");
         router.push("/dashboard");
+      } else {
+        toast.error(response?.error || "Erreur lors de la connexion");
       }
-      toast.success("Connexion reussie");
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error("Une erreur est survenue. Veuillez réessayer.");
     }
   }
 
