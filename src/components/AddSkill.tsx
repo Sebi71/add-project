@@ -1,12 +1,9 @@
-// "use client"
-
 import { useRouter } from "next/navigation";
 import { useFirebaseSkills } from "@/context/skillContext";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/app/db/configFirebase";
 import { useState } from "react";
 import { SkillFormData } from "@/types/types";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { skillSchema } from "@/schemas/skillSchema";
@@ -59,8 +56,8 @@ export default function AddSkill() {
         logo: imageUrl,
       });
       setImagePreview(undefined);
-      router.push("/dashboard");
       toast.success("Compétence ajoutée avec succès");
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

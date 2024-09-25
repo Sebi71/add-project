@@ -8,9 +8,8 @@ import {
   updateDoc,
   doc,
   query,
-  where,
 } from "firebase/firestore";
-import { db, storage } from "@/app/db/configFirebase";
+import { db} from "@/app/db/configFirebase";
 import { SkillFormData, DbContextType } from "@/types/types";
 
 const SkillContext = createContext<DbContextType | null>(null);
@@ -52,7 +51,13 @@ export const SkillProvider: React.FC<{ children: React.ReactNode }> = ({
                 ...data,
             });
             const newSkill: SkillFormData = { id: docRef.id, ...data };
-            setSkills((prevSkills) => [...prevSkills, newSkill]);
+            setSkills((prevSkills) => {
+                const isDuplicate = prevSkills.some(skill => skill.name === newSkill.name);
+                if (!isDuplicate) {
+                    return [...prevSkills, newSkill];
+                }
+                return prevSkills; 
+            })
         } catch (error) {
             console.error(
                 "Une erreur est survenue lors de l'ajout de l'article",
