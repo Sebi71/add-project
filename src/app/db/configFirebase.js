@@ -21,7 +21,4 @@ export const db = getFirestore(app)
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 
-console.log('API Key:', process.env.NEXT_API_KEY);
-auth.onAuthStateChanged((user) => {
-  console.log(user ? "User is logged in" : "No user is logged in");
-});
+

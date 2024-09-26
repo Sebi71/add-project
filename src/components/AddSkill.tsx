@@ -72,6 +72,9 @@ export default function AddSkill() {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-[500px] m-auto mt-10 flex flex-col gap-2 bg-slate-50 p-5 rounded-md shadow-md"
     >
+      <label htmlFor="category" className="text-slate-900">
+        Catégorie :
+      </label>
       <select id="category" {...register("category")} className="h-10 border border-slate-900 rounded-md">
         <option value="">Sélectionnez une catégorie</option>
         <option value="acquise">Acquise</option>

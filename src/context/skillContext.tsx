@@ -10,9 +10,9 @@ import {
   query,
 } from "firebase/firestore";
 import { db} from "@/app/db/configFirebase";
-import { SkillFormData, DbContextType } from "@/types/types";
+import { SkillFormData, SkillsDbContextType } from "@/types/types";
 
-const SkillContext = createContext<DbContextType | null>(null);
+const SkillContext = createContext<SkillsDbContextType | null>(null);
 
 export const useFirebaseSkills = () => {
   const context = useContext(SkillContext);
