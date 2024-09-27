@@ -1,5 +1,6 @@
 import { ProjectsViewProps } from "@/types/types";
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 import Image from "next/image";
 
 const ProjectsView: React.FC<ProjectsViewProps> = ({ theme, projects }) => {
@@ -12,7 +13,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ theme, projects }) => {
       <h2 className="text-xl font-black text-center pt-4 mb-4">{theme} :</h2>
       <div className="max-w-[1200px] pb-6 pl-4 pr-4 mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 border-b-2">
         {filterProjectsDate.map((project) => (
-          <div key={project.id}>
+          <Link href={`/projects/${project.id}`} key={project.id}>
             <Card className="h-full p-3 hover:translate-y-[-10px] transition-all">
               <div className="w-full relative">
                 <Image
@@ -26,7 +27,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ theme, projects }) => {
               </div>
               <h3 className="font-black uppercase mt-4">{project.title}</h3>
             </Card>
-          </div>
+          </Link>
         ))}
       </div>
     </>

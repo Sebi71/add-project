@@ -46,3 +46,7 @@ export interface ProjectsViewProps {
   theme: string;
   projects: ProjectFormData[];
 }
+
+export type UpdatePageProps = {
+  params: ProjectFormData
+}
