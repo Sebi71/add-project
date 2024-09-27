@@ -1,3 +1,5 @@
+
+
 export interface FormData {
   email: string;
   password: string;
@@ -15,9 +17,14 @@ export interface SkillsDbContextType {
   updateSkill: (skill: SkillFormData) => Promise<void>;
 }
 
+interface Timestamp {
+  seconds: number;
+  nanoseconds: number;
+}
 export interface ProjectFormData {
   id: string;
   type: string;
+  date: Timestamp;
   category: string;
   title: string;
   resum: string;

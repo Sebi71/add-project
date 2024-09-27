@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFirebaseSkills } from "@/context/skillContext";
@@ -23,6 +24,14 @@ export default function AddProject() {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const getCurrentTimestamp = () => {
+    const now = new Date();
+    return {
+      seconds: Math.floor(now.getTime() / 1000),
+      nanoseconds: (now.getTime() % 1000) * 1000000,
+    };
+  };
+
   const {
     register,
     handleSubmit,
@@ -31,6 +40,7 @@ export default function AddProject() {
     resolver: zodResolver(projectSchema),
     defaultValues: {
       type: "",
+      date: getCurrentTimestamp(),
       category: "",
       title: "",
       resum: "",
@@ -96,19 +106,19 @@ export default function AddProject() {
       let imageUrl = "";
       let previews: string[] = [];
 
+      const uploadImage = async (file: File) => {
+        const uniqueFileName = `${uuidv4()}_${file.name.replace(/\s+/g, "_")}`; // Générer un nom unique
+        const imageRef = ref(storage, `projects/${uniqueFileName}`);
+        await uploadBytes(imageRef, file);
+        return getDownloadURL(imageRef);
+      };
+
       if (coverFile) {
-        const coverRef = ref(storage, `projects/${coverFile.name}`);
-        await uploadBytes(coverRef, coverFile);
-        imageUrl = await getDownloadURL(coverRef);
+        imageUrl = await uploadImage(coverFile);
       }
 
       if (imageFiles.length > 0) {
-        const uploadPromises = imageFiles.map(async (file) => {
-          const imageRef = ref(storage, `projects/${file.name}`);
-          await uploadBytes(imageRef, file);
-          return getDownloadURL(imageRef);
-        });
-
+        const uploadPromises = imageFiles.map(uploadImage);
         previews = await Promise.all(uploadPromises);
       }
 
@@ -151,6 +161,17 @@ export default function AddProject() {
         <option value="personnel">Personnel</option>
       </select>
       {errors.type && <p className="text-red-500">{errors.type.message}</p>}
+
+      <label htmlFor="date" className="text-slate-900 mt-10">
+        Date du projet :
+      </label>
+      <input
+        type="date"
+        id="date"
+        {...register("date")}
+        className="h-10 border border-slate-900 rounded-md pl-2"
+      />
+      {errors.date && <p className="text-red-500">{errors.date.message}</p>}
 
       <label htmlFor="category" className="text-slate-900 mt-10">
         Catégorie de projet :
@@ -252,21 +273,25 @@ export default function AddProject() {
         <p className="text-red-500">{errors.description.message}</p>
       )}
 
-      <legend className="text-slate-900 mt-10">Compétences :</legend>
-      <div className="grid grid-cols-3 gap-4 mt-2">
-        {skills.map((skill) => (
-          <div key={skill.id} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id={skill.name}
-              value={skill.name}
-              {...register("skills")}
-            />
-            <label htmlFor={skill.name}>{skill.name}</label>
-          </div>
-        ))}
-      </div>
-      {errors.skills && <p className="text-red-500">{errors.skills.message}</p>}
+      <fieldset>
+        <legend className="text-slate-900 mt-10">Compétences :</legend>
+        <div className="grid grid-cols-3 gap-4 mt-2">
+          {skills.map((skill) => (
+            <div key={skill.id} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id={skill.name}
+                value={skill.name}
+                {...register("skills")}
+              />
+              <label htmlFor={skill.name}>{skill.name}</label>
+            </div>
+          ))}
+        </div>
+        {errors.skills && (
+          <p className="text-red-500">{errors.skills.message}</p>
+        )}
+      </fieldset>
 
       <label htmlFor="githubLink" className="text-slate-900 mt-10">
         Lien Github :
@@ -290,7 +315,7 @@ export default function AddProject() {
         {...register("liveLink")}
         className="h-10 border border-slate-900 rounded-md pl-2"
       />
-      <button className="mt-4 h-10 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+      <button className="mt-4 h-10 bg-green-500 text-black rounded-md hover:bg-green-600 transition duration-200">
         Envoyer à la BDD
       </button>
     </form>

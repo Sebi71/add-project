@@ -14,9 +14,9 @@ export default function Dashboardpage() {
   const {projects} = useFirebaseProjects();
 
   const cours = projects.filter((project) => project.type === "cours");
-  console.log(cours);
+  // console.log(cours);
   
-  // const personnel = projects.filter((project) => project.type === "personnel");
+  const personnel = projects.filter((project) => project.type === "personnel");
 
   return (
     <ProtectedRoute>
@@ -51,12 +51,12 @@ export default function Dashboardpage() {
               </button>
             </div>
           </nav>
-          <div className="mb-10 border-b-2 pb-5">
+          <div className="border-b-2 pb-5">
             <SkillsView />
           </div>
           <div>
+            <ProjectsView theme={"Projets personnel"} projects={personnel} />
             <ProjectsView theme={"Projets OpenClassrooms"} projects={cours} />
-            {/* <ProjectsView /> */}
           </div>
         </>
       ) : null}

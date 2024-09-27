@@ -34,7 +34,7 @@ export default function SkillsView() {
 
   return (
     <>
-      <h2 className="text-3xl text-center pt-4">Liste des compétences :</h2>
+      <h2 className="text-xl font-black text-center pt-4">Liste des compétences :</h2>
       <h3 className="text-xl mt-4 ml-4">Compétences acquises : </h3>
       <div className="flex justify-center flex-wrap gap-5 mt-5 mb-5">
         {acquired.map((skill) => (

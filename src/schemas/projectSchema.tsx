@@ -1,9 +1,8 @@
 import {z} from "zod";
-import { skillSchema } from "./skillSchema";
-
 
 export const projectSchema = z.object({
     type: z.string().min(1, "Le champs est obligatoire"),
+    date: z.string().transform((val) => new Date(val)),
     category: z.string().min(1, "Le champs est requis"),
     title: z.string().min(1, "Le champs est requis"),
     resum: z.string().min(1, "Le champs est requis"),

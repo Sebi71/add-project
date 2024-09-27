@@ -110,7 +110,7 @@ export default function AddSkill() {
           alt={imagePreview}
         />
       )}
-      <button className="mt-4 h-10 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+      <button className="mt-4 h-10 bg-green-500 text-black rounded-md hover:bg-green-600 transition duration-200">
         Envoyer à la BDD
       </button>
     </form>
