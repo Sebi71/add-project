@@ -34,3 +34,8 @@ export interface ProjectsDbContextType {
   addProject: (projectdata: Omit<ProjectFormData, "id">) => Promise<void>;
   // updateProject: (project: ProjectFormData) => Promise<void>;
 }
+
+export interface ProjectsViewProps {
+  theme: string;
+  projects: ProjectFormData[];
+}

@@ -4,10 +4,19 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "../../../componenents/protectedRoute";
 import SkillsView from "@/components/SkillsView";
+import ProjectsView from "@/components/ProjectsView";
+import { useFirebaseProjects } from "@/context/projectContext";
 
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
+
+  const {projects} = useFirebaseProjects();
+
+  const cours = projects.filter((project) => project.type === "cours");
+  console.log(cours);
+  
+  // const personnel = projects.filter((project) => project.type === "personnel");
 
   return (
     <ProtectedRoute>
@@ -44,7 +53,10 @@ export default function Dashboardpage() {
           </nav>
           <div className="mb-10 border-b-2 pb-5">
             <SkillsView />
-          {/* gallerie de projet */}
+          </div>
+          <div>
+            <ProjectsView theme={"Projets OpenClassrooms"} projects={cours} />
+            {/* <ProjectsView /> */}
           </div>
         </>
       ) : null}

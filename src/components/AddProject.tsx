@@ -12,7 +12,7 @@ import { projectSchema } from "@/schemas/projectSchema";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function AddProject(data: ProjectFormData) {
+export default function AddProject() {
   const router = useRouter();
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | undefined>();
@@ -27,22 +27,21 @@ export default function AddProject(data: ProjectFormData) {
     register,
     handleSubmit,
     formState: { errors },
-} = useForm<ProjectFormData>({
+  } = useForm<ProjectFormData>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
-        type: "",
-        category: "",
-        title: "",
-        resum: "",
-        cover: "",
-        pictures: [],
-        description: "",
-        skills: [],
-        githubLink: "",
-        liveLink: "",
+      type: "",
+      category: "",
+      title: "",
+      resum: "",
+      cover: "",
+      pictures: [],
+      description: "",
+      skills: [],
+      githubLink: "",
+      liveLink: "",
     },
-});
-console.log("Form errors:", errors);
+  });
 
   const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
@@ -88,10 +87,10 @@ console.log("Form errors:", errors);
   };
 
   const onSubmit: SubmitHandler<ProjectFormData> = async (data) => {
-    console.log("Form submitted with data:", data);
-    const selectedSkills: SkillFormData[] = skills.filter(skill =>
-        data.skills.includes(skill.name) 
-      );
+    const selectedSkills: SkillFormData[] = skills.filter((skill) =>
+      // @ts-ignore
+      data.skills.includes(skill.name)
+    );
 
     try {
       let imageUrl = "";
@@ -100,29 +99,18 @@ console.log("Form errors:", errors);
       if (coverFile) {
         const coverRef = ref(storage, `projects/${coverFile.name}`);
         await uploadBytes(coverRef, coverFile);
-        console.log("Fichier déplacé avec succès :", coverFile.name);
         imageUrl = await getDownloadURL(coverRef);
-        console.log("URL du fichier :", imageUrl);
       }
 
       if (imageFiles.length > 0) {
         const uploadPromises = imageFiles.map(async (file) => {
           const imageRef = ref(storage, `projects/${file.name}`);
           await uploadBytes(imageRef, file);
-          console.log("Fichier téléversé avec succès :", file.name);
-          const url = await getDownloadURL(imageRef);
-          console.log("URL du fichier :", url);
-          return url;
+          return getDownloadURL(imageRef);
         });
 
         previews = await Promise.all(uploadPromises);
       }
-
-      console.log("Adding project with data:", {
-        ...data,
-        cover: imageUrl,
-        pictures: previews,
-      });
 
       await addProject({
         ...data,
@@ -134,14 +122,14 @@ console.log("Form errors:", errors);
       setCoverPreview(undefined);
       setImagePreview([]);
       setImageFiles([]);
-      toast.success("Projet ajouté avec succès");
+      toast.success("Projet ajouté avec succès");
       router.push("/dashboard");
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Une erreur est survenue. Veuillez réessayer.");
-      }
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Une erreur est survenue. Veuillez réessayer."
+      );
     }
   };
 
@@ -308,4 +296,3 @@ console.log("Form errors:", errors);
     </form>
   );
 }
-
