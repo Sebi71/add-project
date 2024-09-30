@@ -1,6 +1,7 @@
 //npm i zod react-hook-form @hookform/resolvers react-toastify
 //npm install next-auth
 
+import { useSession } from "next-auth/react"; 
 import { FormData } from "@/types/types";
 import { loginSchema } from "@/schemas/loginSchema";
 import { z } from "zod";
@@ -34,11 +35,20 @@ export default function FormLogin() {
         redirect: false,
       });
 
-      // console.log("Réponse de signIn :", response); 
+      console.log("Réponse de signIn :", response); 
 
       if (response && !response.error) {
-        toast.success("Connexion réussie");
-        router.push("/dashboard");
+        // Ici, nous pouvons obtenir les données de session
+        const sessionResponse = await fetch('/api/auth/session'); // API pour obtenir la session
+        const session = await sessionResponse.json();
+  
+        if (session.user) {
+          console.log("Utilisateur connecté avec NextAuth :", session.user);
+          toast.success("Connexion réussie");
+          router.push("/dashboard");
+        } else {
+          toast.error("Erreur lors de la récupération des données utilisateur.");
+        }
       } else {
         toast.error(response?.error || "Erreur lors de la connexion");
       }

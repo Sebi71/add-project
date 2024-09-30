@@ -56,6 +56,8 @@ export default function Dashboardpage() {
     return () => unsubscribe(); // Nettoyer l'écouteur
   }, []);
 
+  console.log("Utilisateur Firebase dashboard :", user);
+
   return (
     <ProtectedRoute>
       {session ? (
