@@ -34,7 +34,7 @@ export default function FormLogin() {
         redirect: false,
       });
 
-      console.log("Réponse de signIn :", response); 
+      // console.log("Réponse de signIn :", response); 
 
       if (response && !response.error) {
         toast.success("Connexion réussie");

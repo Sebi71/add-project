@@ -46,7 +46,7 @@ export default function Dashboardpage() {
         console.log("Utilisateur connecté :", user);
         setUser(user); // `user` ici est de type FirebaseUser
       } else {
-        console.log("Aucun utilisateur connecté");
+        console.log("Aucun utilisateur connecté sur le site");
         setUser(null); // Cela peut être `null`
       }
     });

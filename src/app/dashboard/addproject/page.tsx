@@ -10,7 +10,7 @@ auth.onAuthStateChanged((user) => {
   if (user) {
     console.log("Utilisateur connecté :", user);
   } else {
-    console.log("Aucun utilisateur connecté");
+    console.log("Aucun utilisateur connecté pour addproject");
   }
 });
 
