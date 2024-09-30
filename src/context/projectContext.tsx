@@ -67,10 +67,28 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
+  const updateProject = async (project: ProjectFormData) => {
+    try {
+      const projectRef = doc(db, "projects", project.id);
+      const {id, ...dataToUpdate} = project;
+      await updateDoc(projectRef, dataToUpdate);
+      setProjects(
+        projects.map((a) => (a.id === project.id ? { ...a, ...dataToUpdate } : a))
+      );
+    } catch (error) {
+      console.error(
+        "Une erreur est survenue lors de la modification de l'article",
+        error
+      );
+      throw new Error("Erreur dans la modification de l'article");
+    }
+  }
+
 
   const value = {
     projects,
     addProject,
+    updateProject,
   };
 
   return <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>;

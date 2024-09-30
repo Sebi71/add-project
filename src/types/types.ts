@@ -1,5 +1,3 @@
-
-
 export interface FormData {
   email: string;
   password: string;
@@ -39,7 +37,7 @@ export interface ProjectFormData {
 export interface ProjectsDbContextType {
   projects: ProjectFormData[];
   addProject: (projectdata: Omit<ProjectFormData, "id">) => Promise<void>;
-  // updateProject: (project: ProjectFormData) => Promise<void>;
+  updateProject: (project: ProjectFormData) => Promise<void>;
 }
 
 export interface ProjectsViewProps {
@@ -47,6 +45,11 @@ export interface ProjectsViewProps {
   projects: ProjectFormData[];
 }
 
-export type UpdatePageProps = {
-  params: ProjectFormData
+export interface UpdatePageProps {
+  params: ProjectFormData;
+}
+
+export interface FilterProps {
+  handleFilter: (category: string) => void;
+  categories: string[];
 }

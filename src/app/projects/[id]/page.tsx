@@ -1,5 +1,6 @@
 "use client";
 
+import ProtectedRoute from "../../../../componenents/protectedRoute";
 import { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/db/configFirebase";
@@ -54,15 +55,20 @@ export default function ProjectPage({ params }: UpdatePageProps) {
   }
 
   return (
-    <>
+    <ProtectedRoute>
       <NavBar />
       <div className="ml-5 mr-5">
+        <Link href={`/dashboard/updateproject/${project.id}`}>
+          <button className="bg-slate-400 hover:bg-blue-500 rounded-md p-3 flex items-center mt-6">
+            Modifier le projet
+          </button>
+        </Link>
         <h1 className="text-3xl font-black text-center pt-4 mb-10">
           {project?.title}
         </h1>
 
         <div className="border-2 rounded-md mb-10 p-2">
-          <span >{project?.resum} :</span>
+          <span>{project?.resum} :</span>
           <p className="mt-4">{project?.description}</p>
         </div>
         <div>
@@ -81,7 +87,10 @@ export default function ProjectPage({ params }: UpdatePageProps) {
         <h2 className="text-xl underline">Compétences :</h2>
         <div className="flex flex-wrap justify-center gap-4 mb-10 border-b-2 pb-5">
           {project?.skills.map((skill) => (
-            <div key={skill.id} className="flex flex-col items-center justify-center border-slate-500 border-solid border-2 p-2 rounded-lg w-[105px] h-[120px]">
+            <div
+              key={skill.id}
+              className="flex flex-col items-center justify-center border-slate-500 border-solid border-2 p-2 rounded-lg w-[105px] h-[120px]"
+            >
               <img
                 src={skill.logo}
                 alt={`compétence ${skill.name}`}
@@ -105,6 +114,6 @@ export default function ProjectPage({ params }: UpdatePageProps) {
           ))}
         </div>
       </div>
-    </>
+    </ProtectedRoute>
   );
 }

@@ -1,22 +1,38 @@
 "use client";
 
+import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "../../../componenents/protectedRoute";
 import SkillsView from "@/components/SkillsView";
 import ProjectsView from "@/components/ProjectsView";
 import { useFirebaseProjects } from "@/context/projectContext";
+import Filter from "@/components/Filter";
 
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const {projects} = useFirebaseProjects();
+  const { projects } = useFirebaseProjects();
 
-  const cours = projects.filter((project) => project.type === "cours");
-  // console.log(cours);
-  
-  const personnel = projects.filter((project) => project.type === "personnel");
+  const [selectCategory, setSelectCategory] = useState("Tous");
+  const categories = projects
+    .map((project) => project.category)
+    .filter((category, index, self) => self.indexOf(category) === index);
+  const handleFilter = (category: string) => {
+    setSelectCategory(category);
+  };
+
+  const cours = projects.filter(
+    (project) =>
+      project.type === "cours" &&
+      (selectCategory === "Tous" || project.category === selectCategory)
+  );
+  const personnel = projects.filter(
+    (project) =>
+      project.type === "personnel" &&
+      (selectCategory === "Tous" || project.category === selectCategory)
+  );
 
   return (
     <ProtectedRoute>
@@ -38,13 +54,13 @@ export default function Dashboardpage() {
                 Se déconnecter
               </button>
               <button
-              onClick={()=> router.push("/dashboard/addproject")}
+                onClick={() => router.push("/dashboard/addproject")}
                 className="bg-green-400 hover:bg-green-500 rounded-md p-3 flex items-center"
               >
                 Ajouter un projet
               </button>
               <button
-              onClick={()=> router.push("/dashboard/addskill")}
+                onClick={() => router.push("/dashboard/addskill")}
                 className="bg-blue-400 hover:bg-blue-500 rounded-md p-3 flex items-center"
               >
                 Ajouter une compétence
@@ -55,7 +71,11 @@ export default function Dashboardpage() {
             <SkillsView />
           </div>
           <div>
-            <ProjectsView theme={"Projets personnel"} projects={personnel} />
+            <h2 className="text-xl font-black text-center pt-4 mb-4">Liste des projets :</h2>
+            <Filter categories={categories} handleFilter={handleFilter} />
+            {personnel.length !== 0 && (
+              <ProjectsView theme={"Projets personnels"} projects={personnel} />
+            )}
             <ProjectsView theme={"Projets OpenClassrooms"} projects={cours} />
           </div>
         </>
