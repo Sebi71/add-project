@@ -16,8 +16,8 @@ import { auth } from "@/app/db/configFirebase";
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  console.log("Statut de la session :", status);
-  console.log("Données de la session :", session);
+  // console.log("Statut de la session :", status);
+  // console.log("Données de la session :", session);
 
   const { projects } = useFirebaseProjects();
 
@@ -41,34 +41,45 @@ export default function Dashboardpage() {
   );
 
   const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("Utilisateur connecté :", user);
-        setUser(user); // `user` ici est de type FirebaseUser
-      } else {
-        console.log("Aucun utilisateur connecté sur le site");
-        setUser(null); // Cela peut être `null`
-      }
+      setUser(user);
+      setLoading(false); // Charger terminé
     });
 
     return () => unsubscribe(); // Nettoyer l'écouteur
   }, []);
 
-  console.log("Utilisateur Firebase dashboard :", user);
+  useEffect(() => {
+    if (user) {
+      console.log("Utilisateur Firebase dashboard :", user);
+    } else {
+      console.log("Aucun utilisateur connecté");
+    }
+  }, [user]);
+  
+
+  if (loading) {
+    return <div>Chargement...</div>; // Afficher un message de chargement
+  }
+
+  
+
+
 
   return (
     <ProtectedRoute>
-      {session ? (
+      {/* {session ? ( */}
         <>
           <nav className="flex items-center justify-center flex-col gap-5 mt-10 ml-5 mr-5 border-b-2 pb-5">
             <h1 className="text-4xl text-gray-700 uppercase font-black">
-              Bienvenue <b>{session.user?.name}</b>
+              Bienvenue <b>{session?.user?.name}</b>
             </h1>
             <p>
               <b>Email: </b>
-              {session.user?.email}
+              {session?.user?.email}
             </p>
             <div className="flex gap-8">
               <button
@@ -103,7 +114,7 @@ export default function Dashboardpage() {
             <ProjectsView theme={"Projets OpenClassrooms"} projects={cours} />
           </div>
         </>
-      ) : null}
+      {/* ) : null} */}
     </ProtectedRoute>
   );
 }

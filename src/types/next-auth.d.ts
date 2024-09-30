@@ -4,15 +4,13 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
   interface Session {
     user: {
-      id: string; // Ajoute le type pour l'ID
+      id: string; 
       email: string;
-      // d'autres propriétés si nécessaire
     } & DefaultSession["user"];
   }
 
   interface User {
-    id: string; // Ajoute le type pour l'ID
+    id: string; 
     email: string;
-    // d'autres propriétés si nécessaire
   }
 }
