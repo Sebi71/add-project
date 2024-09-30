@@ -34,6 +34,8 @@ export default function FormLogin() {
         redirect: false,
       });
 
+      console.log("Réponse de signIn :", response); 
+
       if (response && !response.error) {
         toast.success("Connexion réussie");
         router.push("/dashboard");
@@ -41,6 +43,7 @@ export default function FormLogin() {
         toast.error(response?.error || "Erreur lors de la connexion");
       }
     } catch (error) {
+      console.error("Erreur de connexion :", error); 
       toast.error("Une erreur est survenue. Veuillez réessayer.");
     }
   }
