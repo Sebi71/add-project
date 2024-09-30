@@ -237,7 +237,7 @@ export default function UpdateProject({ params }: UpdatePageProps) {
       {currentImageCover && (
         <Image
           src={currentImageCover}
-          alt="image de couverture"
+          alt={`photo de couverture du projet ${projectToUpdate?.title}`}
           width={1024}
           height={200}
         />
@@ -263,7 +263,7 @@ export default function UpdateProject({ params }: UpdatePageProps) {
           <Image
             key={index}
             src={preview}
-            alt="image du projet"
+            alt={`Photo du projet ${projectToUpdate?.title} ${index + 1}`}
             width={1024}
             height={200}
             onClick={() => removeImage(index)}
