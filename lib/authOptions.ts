@@ -4,8 +4,9 @@ import { auth } from "@/app/db/configFirebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 interface ExtendedUser {
-  id: string; 
+  id: string;
   email: string;
+  token: string;
 }
 interface ExtendedSession extends DefaultSession {
   user: ExtendedUser;
@@ -34,13 +35,15 @@ export const authOptions: NextAuthOptions = {
           const user = userCredential.user;
 
           if (user) {
+            const token = await user.getIdToken();
+
             return {
               id: user.uid,
-              email: user.email ?? "", 
+              email: user.email ?? "",
+              token, 
             };
-          } else {
-            return null;
           }
+          return null;
         } catch (error: any) {
           console.error(error.message);
           return null;
@@ -53,14 +56,22 @@ export const authOptions: NextAuthOptions = {
     maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
-    async session({ session, token }): Promise<ExtendedSession> {
-      session.user = {
-        id: token.id as string, 
-        email: token.email as string, 
-      } as ExtendedUser;
+    async jwt({ token, user }) {
+      if (user) {
+        const firebaseToken = await auth.currentUser?.getIdToken();
+        token.id = user.id;
+        token.email = user.email;
+        token.firebaseToken = firebaseToken; 
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.email = token.email;
+        session.user.firebaseToken = token.firebaseToken; 
+      }
       return session;
     },
   },
 };
-
-      

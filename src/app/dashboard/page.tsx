@@ -16,7 +16,7 @@ import { auth } from "@/app/db/configFirebase";
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  // console.log("Statut de la session :", status);
+  // console.log(session?.user?.firebaseToken);
   // console.log("Données de la session :", session);
 
   const { projects } = useFirebaseProjects();
@@ -59,6 +59,15 @@ export default function Dashboardpage() {
       console.log("Aucun utilisateur connecté");
     }
   }, [user]);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      console.log("Session NextAuth :", session);
+    } else {
+      console.log("Aucune session NextAuth active");
+    }
+  }, [session, status]);
+  
   
 
   if (loading) {
