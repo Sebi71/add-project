@@ -16,6 +16,8 @@ import { auth } from "@/app/db/configFirebase";
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  console.log("Statut de la session :", status);
+  console.log("Données de la session :", session);
 
   const { projects } = useFirebaseProjects();
 
