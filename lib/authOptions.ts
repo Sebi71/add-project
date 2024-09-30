@@ -25,6 +25,7 @@ export const authOptions: NextAuthOptions = {
                   credentials.password
                 );
                 const user = userCredential.user;
+                console.log("authoption Utilisateur connecté :", user);
       
                 if (user) {
                   return {

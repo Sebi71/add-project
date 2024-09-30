@@ -9,6 +9,10 @@ import ProjectsView from "@/components/ProjectsView";
 import { useFirebaseProjects } from "@/context/projectContext";
 import Filter from "@/components/Filter";
 
+import { useEffect} from "react";
+import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth"
+import { auth } from "@/app/db/configFirebase";
+
 export default function Dashboardpage() {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -33,6 +37,22 @@ export default function Dashboardpage() {
       project.type === "personnel" &&
       (selectCategory === "Tous" || project.category === selectCategory)
   );
+
+  const [user, setUser] = useState<FirebaseUser | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Utilisateur connecté :", user);
+        setUser(user); // `user` ici est de type FirebaseUser
+      } else {
+        console.log("Aucun utilisateur connecté");
+        setUser(null); // Cela peut être `null`
+      }
+    });
+
+    return () => unsubscribe(); // Nettoyer l'écouteur
+  }, []);
 
   return (
     <ProtectedRoute>
