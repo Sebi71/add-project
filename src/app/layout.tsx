@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import SessionWrapper from "../../componenents/SessionWrapper";
 import { SkillProvider } from "@/context/skillContext";
 import { ProjectProvider } from "@/context/projectContext";
 import { ToastContainer } from "react-toastify";
@@ -29,7 +28,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionWrapper>
       <html lang="fr">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -42,6 +40,5 @@ export default function RootLayout({
           </SkillProvider>
         </body>
       </html>
-    </SessionWrapper>
   );
 }

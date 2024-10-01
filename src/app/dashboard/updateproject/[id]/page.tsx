@@ -1,6 +1,6 @@
 "use client"
 
-import { ProjectFormData, SkillFormData, UpdatePageProps } from "@/types/types";
+import { UpdatePageProps } from "@/types/types";
 import ProtectedRoute from "@/../../componenents/protectedRoute"
 import UpdateProject from "@/components/UpdateProject";
 import NavBar from "@/components/NavBar";

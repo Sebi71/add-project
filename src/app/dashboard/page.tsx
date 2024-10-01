@@ -1,24 +1,19 @@
 "use client";
 
+import useAuth from "@/hooks/useAuth";
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "../../../componenents/protectedRoute";
 import SkillsView from "@/components/SkillsView";
 import ProjectsView from "@/components/ProjectsView";
 import { useFirebaseProjects } from "@/context/projectContext";
 import Filter from "@/components/Filter";
-
-import { useEffect} from "react";
-import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth"
-import { auth } from "@/app/db/configFirebase";
+import { signOut } from "firebase/auth"
+import {auth} from "@/app/db/configFirebase"
 
 export default function Dashboardpage() {
   const router = useRouter();
-  const { data: session, status } = useSession();
-  // console.log(session?.user?.firebaseToken);
-  // console.log("Données de la session :", session);
-
+  const { user } = useAuth();
   const { projects } = useFirebaseProjects();
 
   const [selectCategory, setSelectCategory] = useState("Tous");
@@ -40,59 +35,26 @@ export default function Dashboardpage() {
       (selectCategory === "Tous" || project.category === selectCategory)
   );
 
-  const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false); // Charger terminé
-    });
-
-    return () => unsubscribe(); // Nettoyer l'écouteur
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      console.log("Utilisateur Firebase dashboard :", user);
-    } else {
-      console.log("Aucun utilisateur connecté");
+  const handleSignOut = () => {
+    signOut(auth)
+    router.push("/")
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      console.log("Session NextAuth :", session);
-    } else {
-      console.log("Aucune session NextAuth active");
-    }
-  }, [session, status]);
-  
-  
-
-  if (loading) {
-    return <div>Chargement...</div>; // Afficher un message de chargement
-  }
-
-  
-
 
 
   return (
     <ProtectedRoute>
-      {/* {session ? ( */}
         <>
           <nav className="flex items-center justify-center flex-col gap-5 mt-10 ml-5 mr-5 border-b-2 pb-5">
             <h1 className="text-4xl text-gray-700 uppercase font-black">
-              Bienvenue <b>{session?.user?.name}</b>
+              Bienvenue
             </h1>
             <p>
               <b>Email: </b>
-              {session?.user?.email}
+              {user?.email}
             </p>
             <div className="flex gap-8">
               <button
-                onClick={() => signOut()}
+                onClick={handleSignOut}
                 className="bg-red-300 hover:bg-red-500 rounded-md p-3 flex items-center"
               >
                 Se déconnecter
@@ -123,7 +85,6 @@ export default function Dashboardpage() {
             <ProjectsView theme={"Projets OpenClassrooms"} projects={cours} />
           </div>
         </>
-      {/* ) : null} */}
     </ProtectedRoute>
   );
 }

@@ -1,9 +1,17 @@
-import { signOut } from "next-auth/react";
+import { signOut } from "firebase/auth"
+import {auth} from "@/app/db/configFirebase"
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GiReturnArrow } from "react-icons/gi";
 import { CiLogout } from "react-icons/ci";
 
 export default function NavBar() {
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    signOut(auth)
+    router.push("/")
+    }
 
   return (
     <nav className="flex items-center justify-between border-b-2 pr-10">
@@ -28,7 +36,7 @@ export default function NavBar() {
           Compétence +
         </Link>
         <button
-          onClick={() => signOut()}
+          onClick={handleSignOut}
           className="bg-red-300 hover:bg-red-500 rounded-md p-3 flex items-center"
           aria-label="Se deconnecter"
         >

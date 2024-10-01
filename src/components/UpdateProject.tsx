@@ -31,7 +31,7 @@ export default function UpdateProject({ params }: UpdatePageProps) {
   const formatDateForInput = (timestamp: any) => {
     if (!timestamp) return "";
     const date = new Date(timestamp.seconds * 1000);
-    return date.toISOString().split("T")[0]; // Convertir en format YYYY-MM-DD
+    return date.toISOString().split("T")[0]; 
   };
   const formattedDateForInput = formatDateForInput(projectToUpdate?.date);
 
