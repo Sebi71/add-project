@@ -47,6 +47,7 @@ export default function SkillsView() {
               defaultSelected
               onChange={() => handleCheckboxChange(skill)}
               className="transform translate-x-full absolute"
+              aria-label={`${skill.name} acquis`}
               aria-labelledby={`label-${skill.name}`}
             />
             <img src={skill.logo} alt={`compétence ${skill.name}`} width={50} height={50} />
@@ -65,6 +66,7 @@ export default function SkillsView() {
             <Checkbox
               onChange={() => handleCheckboxChange(skill)}
               className="transform translate-x-full absolute"
+              aria-label={`${skill.name} à développer`}
               aria-labelledby={`label-${skill.name}`}
             />
             <img src={skill.logo} alt={`compétence ${skill.name}`} width={50} height={50} />

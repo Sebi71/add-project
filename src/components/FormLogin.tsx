@@ -45,17 +45,19 @@ export default function FormLogin() {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-[800px] flex flex-col gap-2 bg-slate-50 p-5 rounded-md shadow-md"
     >
-      <label className="text-slate-900">Nom d'utilisateur (email) :</label>
+      <label htmlFor="email" className="text-slate-900">Nom d'utilisateur (email) :</label>
       <input
         {...register("email")}
+        id="email"
         type="email"
         className="h-10 border border-slate-900 p-4 rounded-md"
       />
       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       
-      <label className="text-slate-900">Mot de passe :</label>
+      <label htmlFor="password" className="text-slate-900">Mot de passe :</label>
       <input
         {...register("password")}
+        id="password"
         type="password"
         className="h-10 border border-slate-900 p-4 rounded-md"
       />
@@ -67,7 +69,7 @@ export default function FormLogin() {
       
       <button
         type="submit"
-        className="mt-4 h-10 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
+        className="mt-4 h-10 bg-blue-500 text-black rounded-md hover:bg-blue-600 transition duration-200"
       >
         Se connecter
       </button>
