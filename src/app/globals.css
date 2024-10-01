@@ -18,10 +18,19 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  max-width: 1440px;
+  margin: auto;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/fonts/customfont.woff2') format('woff2');
+  font-display: swap;
 }

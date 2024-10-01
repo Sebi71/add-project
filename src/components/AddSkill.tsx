@@ -47,9 +47,9 @@ export default function AddSkill() {
       if (file) {
         const imageRef = ref(storage, `skillsLogos/${file.name}`);
         await uploadBytes(imageRef, file);
-        console.log("Fichier téléversé avec succès :", file.name);
+        // console.log("Fichier téléversé avec succès :", file.name);
         imageUrl = await getDownloadURL(imageRef);
-        console.log("URL du fichier :", imageUrl);
+        // console.log("URL du fichier :", imageUrl);
       }
       await addSkill({
         ...data,
@@ -108,6 +108,8 @@ export default function AddSkill() {
           className="max-w-[100px] h-auto flex"
           src={imagePreview}
           alt={imagePreview}
+          width={50}
+          height={50}
         />
       )}
       <button className="mt-4 h-10 bg-green-500 text-black rounded-md hover:bg-green-600 transition duration-200">

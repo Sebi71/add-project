@@ -76,7 +76,7 @@ export default function Dashboardpage() {
           <div className="border-b-2 pb-5">
             <SkillsView />
           </div>
-          <div>
+          <div className="w-full h-full mx-auto">
             <h2 className="text-xl font-black text-center pt-4 mb-4">Liste des projets :</h2>
             <Filter categories={categories} handleFilter={handleFilter} />
             {personnel.length !== 0 && (

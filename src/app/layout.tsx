@@ -29,8 +29,19 @@ export default function RootLayout({
 }>) {
   return (
       <html lang="fr">
+        <head>
+        {/* Preconnect to important third-party origins */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://identitytoolkit.googleapis.com" />
+        <link rel="preconnect" href="https://www.googleapis.com" />
+
+        {/* DNS Prefetch */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//identitytoolkit.googleapis.com" />
+        <link rel="dns-prefetch" href="//www.googleapis.com" />
+      </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <SkillProvider>
           <ProjectProvider>

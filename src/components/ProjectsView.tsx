@@ -29,7 +29,7 @@ const ProjectsView: React.FC<ProjectsViewProps> = ({ theme, projects }) => {
                   alt={`photo de couverture du projet ${project.title}`}
                   width={1024}
                   height={460}
-                  className="h-[200px] object-cover"
+                  className="h-[200px] w-auto object-cover"
                   priority
                 />
               </div>
