@@ -44,7 +44,7 @@ const useAuth = () => {
 
   const redirectIfAuthenticated = () => {
     if (user) {
-      router.push("/dashboard");
+      router.push("/home");
     }
   };
 

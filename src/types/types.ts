@@ -53,3 +53,17 @@ export interface FilterProps {
   handleFilter: (category: string) => void;
   categories: string[];
 }
+
+export interface HobbieFormData {
+  id: string;
+  category: string;
+  title: string;
+  resum: string;
+  pictures: string[];
+}
+
+export interface HobbieDbContextType {
+  hobbies: HobbieFormData[];
+  addHobbie: (hobbiedata: Omit<HobbieFormData, "id">) => Promise<void>;
+  updateHobbie: (hobbie: HobbieFormData) => Promise<void>;
+}
