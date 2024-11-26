@@ -67,3 +67,7 @@ export interface HobbieDbContextType {
   addHobbie: (hobbiedata: Omit<HobbieFormData, "id">) => Promise<void>;
   updateHobbie: (hobbie: HobbieFormData) => Promise<void>;
 }
+
+export interface HobbiePageProps {
+  params: HobbieFormData;
+}
