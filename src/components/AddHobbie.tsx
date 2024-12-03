@@ -114,10 +114,10 @@ export default function AddHobbie() {
       >
         <option value="">Sélectionnez une catégorie</option>
         <option value='Travaux'>Travaux</option>
-        <option value="Meuble">Meuble</option>
-        <option value="Chantournage">Chantournage</option>
-        <option value="Réparation">Réparation</option>
-        <option value="Autre">Autre</option>
+        <option value="Meubles">Meubles</option>
+        <option value="Chantournages">Chantournages</option>
+        <option value="Réparations">Réparations</option>
+        <option value="Autres">Autres</option>
       </select>
       {errors.category && (
         <p className="text-red-500">{errors.category.message}</p>
