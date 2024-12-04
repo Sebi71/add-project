@@ -8,6 +8,7 @@ import {
   updateDoc,
   doc,
   query,
+  serverTimestamp
 } from "firebase/firestore";
 import { db } from "@/app/db/configFirebase";
 import { HobbieFormData, HobbieDbContextType } from "@/types/types";
@@ -49,6 +50,7 @@ export const HobbieProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
         const docRef = await addDoc(collection(db, "hobbies"), {
             ...data,
+            createdAt: serverTimestamp(),
         });
         const newHobbie: HobbieFormData = {id: docRef.id, ...data};
         setHobbies((prevHobbies) => {
