@@ -1,5 +1,5 @@
 "use client"
-import ProtectedRoute from "../../../../componenents/protectedRoute"
+import ProtectedRoute from "@/components/protectedRoute"
 import AddProject from "@/components/AddProject"
 import NavBar from "@/components/NavBar";
 

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import projectImage from "@/public/images/pexels-luis-gomes-166706-546819.webp";
 import hobbiesImage from "@/public/images/pexels-pixabay-301703.webp";
-import ProtectedRoute from "../../../componenents/protectedRoute";
+import ProtectedRoute from "@/components/protectedRoute";
 
 export default function Home() {
   const router = useRouter();

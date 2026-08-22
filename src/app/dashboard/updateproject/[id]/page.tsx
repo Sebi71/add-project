@@ -1,7 +1,7 @@
 "use client"
 
 import { UpdatePageProps } from "@/types/types";
-import ProtectedRoute from "@/../../componenents/protectedRoute"
+import ProtectedRoute from "@/components/protectedRoute"
 import UpdateProject from "@/components/UpdateProject";
 import NavBar from "@/components/NavBar";
 

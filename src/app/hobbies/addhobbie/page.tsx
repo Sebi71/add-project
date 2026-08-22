@@ -1,7 +1,7 @@
 "use client";
 
 import NavHobbie from "@/components/NavHobbie";
-import ProtectedRoute from "../../../../componenents/protectedRoute";
+import ProtectedRoute from "@/components/protectedRoute";
 import AddHobbie from "@/components/AddHobbie";
 
 export default function AddHobbiePage() {

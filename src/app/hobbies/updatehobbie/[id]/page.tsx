@@ -1,6 +1,6 @@
 "use client";
 
-import ProtectedRoute from "@/../../componenents/protectedRoute";
+import ProtectedRoute from "@/components/protectedRoute";
 import NavHobbie from "@/components/NavHobbie";
 import UpdateHobbie from "@/components/UpdateHobbie"
 import { HobbiePageProps } from "@/types/types";
