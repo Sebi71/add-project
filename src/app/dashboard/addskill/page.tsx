@@ -1,6 +1,6 @@
 "use client"
 
-import ProtectedRoute from "../../../../componenents/protectedRoute";
+import ProtectedRoute from "@/components/protectedRoute";
 import NavBar from "@/components/NavBar";
 import AddSkill from "@/components/AddSkill"
 

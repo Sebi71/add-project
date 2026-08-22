@@ -1,7 +1,7 @@
 "use client";
 
 import NavDashboard from "@/components/NavDashboard";
-import ProtectedRoute from "../../../componenents/protectedRoute";
+import ProtectedRoute from "@/components/protectedRoute";
 import HobbiesViews from "@/components/HobbiesViews";
 
 export default function Hobbies() {

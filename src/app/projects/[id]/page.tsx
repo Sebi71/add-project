@@ -1,6 +1,6 @@
 "use client";
 
-import ProtectedRoute from "../../../../componenents/protectedRoute";
+import ProtectedRoute from "@/components/protectedRoute";
 import { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/db/configFirebase";
